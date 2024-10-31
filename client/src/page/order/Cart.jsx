@@ -57,7 +57,7 @@ const SubTotal=()=>{
        {Cart.map((item)=>{
         return   < tr  key={item._id} className='border-b border-gray-200 hover:bg-gray-100 transition duration-200'>
         <td className='p-2'>
-          <img src={`http://localhost:3000/menu/image-one/${item._id}`} alt={item.name} className='w-24 h-24 object-cover rounded-md' />
+          <img src={`https://food-delivery-backend-dbku.onrender.com/menu/image-one/${item._id}`} alt={item.name} className='w-24 h-24 object-cover rounded-md' />
         </td>
         <td className='p-2'>{item.name}</td>
         <td className='p-2'>{item.quantity}</td>

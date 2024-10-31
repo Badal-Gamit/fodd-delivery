@@ -5,7 +5,7 @@ export const  fetchOrder=createAsyncThunk(
     'fetch-order',
     async()=>{
        try {
-         const {data,status}=await  axios.get('http://localhost:3000/order/order-list')
+         const {data,status}=await  axios.get('https://food-delivery-backend-dbku.onrender.com/order/order-list')
        return data
        } catch (error) {
           toast.error(error.message)

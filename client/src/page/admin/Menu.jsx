@@ -5,13 +5,19 @@ import { FetchDishApi,deleteFooditem } from '../../redux/Slice/Api/food/FetchDis
 
 const Menu = () => {
 const dishList=useSelector((state)=>state.foodList)
+const [isdeleting, setisdeleting] = useState('')
 const dispatch=useDispatch()
 
 useEffect(() => {
  dispatch(FetchDishApi())
+console.log(isdeleting)
+ return ()=>{
+   if (isdeleting)setisdeleting('')
+ }
 }, [])
 
 const handleActionClick=(id)=>{
+  setisdeleting(id)
   dispatch(deleteFooditem(id))
   if (localStorage.getItem('food')) localStorage.removeItem('food')
   if (localStorage.getItem('product')) localStorage.removeItem('product')
@@ -36,26 +42,26 @@ const handleActionClick=(id)=>{
         {dishList.map((item) => (
           <tr key={item._id} className='border-b border-gray-200 hover:bg-gray-100 transition duration-200'>
             <td className='p-2'>
-              <img src={`http://localhost:3000/menu/image-one/${item._id}`} alt={item.name} className='w-24 h-24 object-cover rounded-md' />
+              <img src={`https://food-delivery-backend-dbku.onrender.com/menu/image-one/${item._id}`} alt={item.name} className='w-24 h-24 object-cover rounded-md' />
             </td>
            
             <td className='p-2'>{item.name}</td>
             <td className='p-2'>{item.category}</td>
             <td className='p-2'>{item.price}</td>
             <td className='p-2'>
-              <button
+            {isdeleting==item._id?<span className="loading loading-spinner text-error"></span> :  <button
                 onClick={()=>handleActionClick(item._id) }>
                 <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                   <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                 </svg>
-              </button>
+              </button> } 
               
              </td>
             </tr>
         ))}
       </tbody>
     </table>
-    
+   
   </div>
   )
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Layout from '../../Component/layout/Layout'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { NavLink,useNavigate } from 'react-router-dom'
 import dropin from 'braintree-web-drop-in' 
 import toast from 'react-hot-toast'
 
@@ -15,6 +15,7 @@ const UserOrder = () => {
   const [clientToken, setclientToken] = useState('')
   const [DropinInstance, setDropinInstance] = useState('')
   const Cart = useSelector((state) => state.Cart)
+  navigation=useNavigate()
 
 
   const DiliveryInformation = () => {
@@ -37,7 +38,7 @@ const UserOrder = () => {
   const updateHandle = async (e) => {
 
     try {
-      const { data } = await axios.post('http://localhost:3000/auth/update', form, { headers: { 'Authorization': `Bearer ${token}`, } })
+      const { data } = await axios.post('https://food-delivery-backend-dbku.onrender.com/auth/update', form, { headers: { 'Authorization': `Bearer ${token}`, } })
       toast.success(data.message);
       const NewProfile = { user: data.user, token: token }
       localStorage.setItem('data', JSON.stringify(NewProfile))
@@ -56,7 +57,7 @@ const UserOrder = () => {
 
 const ClienttokkenHandle=async()=>{
  try {
-  const {data} =await  axios.get('http://localhost:3000/order/client-token',{ headers:{ "Authorization":`bearer ${token}`}})
+  const {data} =await  axios.get('https://food-delivery-backend-dbku.onrender.com/order/client-token',{ headers:{ "Authorization":`bearer ${token}`}})
    setclientToken(data.clientToken)
    dropin.create({
     authorization:data.clientToken,
@@ -76,10 +77,12 @@ console.log(error)
 const paymentHandle=async()=>{
  try {
   const product=JSON.parse(localStorage.getItem('product'))
+  console.log(product,'product')
   const { nonce } = await DropinInstance.requestPaymentMethod(); 
-const  {data,status} =await   axios.post(`http://localhost:3000/order/user-checkout/${form._id}`,{amount:total,product,nonce},{ headers:{ "Authorization":`bearer ${token}`}});
+const  {data,status} =await   axios.post(`https://food-delivery-backend-dbku.onrender.com/order/user-checkout/${form._id}`,{amount:total,product,nonce},{ headers:{ "Authorization":`bearer ${token}`}});
+   console.log(data)
    if (status==200) {
-    console.log(data.response)
+       navigation('/order-list')
    return   toast.success(data.message)
    }
    return toast.error(data.message)

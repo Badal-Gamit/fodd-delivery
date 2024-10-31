@@ -4,6 +4,7 @@ import { register } from '../../redux/Slice/Api/form/registrationSlice'
 
 const Registration = () => {
     const [form, setform] = useState({})
+    const regis=useSelector((state)=>state.register)
     const dispatch=useDispatch()
 
   
@@ -12,7 +13,7 @@ const ChangeHandle=(e)=>{
     }
 const SubmitHandle=(e)=>{
         e.preventDefault()
-       dispatch(register(form))
+        dispatch(register(form))
        setform({})
        }
 
@@ -59,12 +60,12 @@ const SubmitHandle=(e)=>{
                         <div className="flex items-start">
                           </div>
                      </div>
-                    <button type="submit" className="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Login to your account</button>
+                    <button type="submit" className="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">{regis===true?<span className="loading loading-spinner loading-xs"></span>:"create your account" }</button>
                     <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
                      Already have Account? <span onClick={()=>{document.getElementById('my_modal_2').close(); document.getElementById('my_modal_1').showModal()}}   className="text-red-700 hover:underline  hover:cursor-pointer dark:text-red-500">login  account</span>
                     </div>
                 </form>
-             
+               
             </div>
   </div>
 </dialog>

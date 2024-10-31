@@ -13,6 +13,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const id =useSelector((state)=>state.login)
   const Formid=useSelector((state)=>state.register)
+  const [isloading, setisloading] = useState(false)
   const [query, setquery] = useState('')
   const dispatch=useDispatch()
   const  navigation=useNavigate()
@@ -32,11 +33,13 @@ const queryHandle=async(e)=>{
   e.preventDefault()
   if (query.length<1) return ; 
 try {
-  const {data,status}=await  axios.post(`http://localhost:3000/menu/query`,{keyword:query})
-  
+  setisloading(true)
+  const {data,status}=await  axios.post(`https://food-delivery-backend-dbku.onrender.com/menu/query`,{keyword:query})
+  console.log(data)
  dispatch(setfood(data.query))
 setquery('')
 dispatch(scrollview(true))
+setisloading(false)
 } catch (error) {
   console.log(error.message)
 }
@@ -59,6 +62,7 @@ dispatch(scrollview(true))
               placeholder="Search..."
               className="px-3 py-1 rounded bg-white text-red-500 focus:outline-none"
             />
+           {isloading?<span className="loading loading-spinner text-error absolute right-2 "></span>:
             <button className="absolute right-1 top-1">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +73,7 @@ dispatch(scrollview(true))
               >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 4a6 6 0 100 12 6 6 0 000-12zm10 10l-3.5-3.5" />
               </svg>
-            </button>
+            </button> }  
             </form>
           </div>
           <NavLink to={'/cart'} >

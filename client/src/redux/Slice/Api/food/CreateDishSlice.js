@@ -6,7 +6,7 @@ export const createDishApi=createAsyncThunk(
     'create-dish',
     async(dish)=>{
       try {
-        const { data,status}=await axios.post('http://localhost:3000/menu/upload',dish, {
+        const { data,status}=await axios.post('https://food-delivery-backend-dbku.onrender.com/menu/upload',dish, {
             headers: {
               "Content-Type": "multipart/form-data",
             },})
@@ -30,6 +30,8 @@ const DishSlice=createSlice({
         extraReducers:(builder)=>{
                builder.addCase(createDishApi.fulfilled,(state,payload)=>{
                       return state={}
+               }).addCase(createDishApi.pending,(state,payload)=>{
+                return state=true
                })
         }
     })

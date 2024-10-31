@@ -5,7 +5,7 @@ const menuRoute=require('./routes/menuRoute')
 const orderRoute=require('./routes/orderRoute')
 const app=express()
 const cors=require('cors')
-const port= process.env.port || 3000
+const port= process.env.PORT || 3000
 
 app.use(express.urlencoded());
 app.use(express.json())

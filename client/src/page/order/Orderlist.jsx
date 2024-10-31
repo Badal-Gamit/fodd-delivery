@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom'
 
 const Orderlist = () => {
  const [order, setorder] = useState([])
+ const [loading, setloading] = useState(false)
 
  
  
@@ -14,10 +15,12 @@ useEffect(() => {
   async function order() {
     const userdata= JSON.parse(localStorage.getItem('data'))
     if (userdata.user) {
+      setloading(true)
       console.log(userdata.user._id);
       console.log(userdata.token)
-      const {data}=await  axios.get(`http://localhost:3000/order/user-order/${userdata.user._id}`,{ headers:{ "Authorization":`bearer ${userdata.token}`}})
+      const {data}=await  axios.get(`https://food-delivery-backend-dbku.onrender.com/order/user-order/${userdata.user._id}`,{ headers:{ "Authorization":`bearer ${userdata.token}`}})
       setorder(data.order)
+      setloading(false)
     }
   }
   order()
@@ -30,7 +33,7 @@ useEffect(() => {
     <Layout><div className="p-4 sm:p-8 md:p-16">
     <div className="text-xl font-bold text-gray-900 sm:text-3xl">Order</div>
     <div className="flex flex-col gap-4">
-      {order.map((order) => {
+      {loading===true? <div className='w-full text-center'><span className="loading loading-spinner   loading-lg"></span></div>  : order.map((order) => {
         return (
           <div
             key={order._id}
@@ -54,7 +57,7 @@ useEffect(() => {
               <span id={order._id}></span>
               <span>{order.status}</span>
             </div>
-            {order.status === 'delivered' ? (
+            {order.status == 'dilivered' ? (
               <div className="bg-red-700 text-red-900 text-sm font-medium me-2 px-3 cursor-pointer py-1 rounded dark:bg-red-900 dark:text-red-300">
                 Track order
               </div>

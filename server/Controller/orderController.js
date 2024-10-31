@@ -7,7 +7,7 @@ const gateway=new braintree.BraintreeGateway({
   publicKey: process.env.Public_Key,
   privateKey:process.env.Private_Key
 });
-
+ 
 const clientTokenController=async(req,res)=>{
   try {
     console.log('nice')
@@ -28,7 +28,7 @@ const clientTokenController=async(req,res)=>{
 const CheckoutController=async(req,res)=>{
   try {
       const {amount,nonce,product}=req.body
-      console.log(req.body);
+      
         const value=amount+5
       gateway.transaction.sale({
         paymentMethodNonce:nonce,
@@ -36,9 +36,10 @@ const CheckoutController=async(req,res)=>{
         options:{
           submitForSettlement:true
         },
-        currencyIsoCode: "USD" 
       },async(err,result)=>{
           if (err) {
+            console.log(err);
+            
             return res.json({message:err})
           } else {
       const response=await  orderModel.create({
@@ -46,9 +47,9 @@ const CheckoutController=async(req,res)=>{
              product:product,
              payment:result,
              })
-            return res.status(200).json({message:"success",response:response})
+           return res.status(200).json({message:"success",response:response})
           }
-        }
+        } 
       )
   } catch (error) {
     return res.status(500).json({message:error})

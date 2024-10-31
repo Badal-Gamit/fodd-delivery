@@ -20,7 +20,7 @@ const statusHandle=async(e,order)=>{
   console.log(e.target.value ,order._id)
 
  const {value,id}=e.target
-  const {status,data}=await axios.patch(`http://localhost:3000/order/order-change/${order._id}`,{value:value})
+  const {status,data}=await axios.patch(`https://food-delivery-backend-dbku.onrender.com/order/order-change/${order._id}`,{value:value})
  if (status==200){
    
   return toast.success(data.message)

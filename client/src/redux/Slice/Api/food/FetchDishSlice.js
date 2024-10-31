@@ -6,7 +6,7 @@ export const FetchDishApi=createAsyncThunk(
     'fetch-dish',
     async()=>{
       try {
- const   {data} =await axios.get('http://localhost:3000/menu/fetch-menu')
+ const   {data} =await axios.get('https://food-delivery-backend-dbku.onrender.com/menu/fetch-menu')
       return data
         } catch (error) {
         console.log(error)
@@ -18,7 +18,7 @@ export const deleteFooditem=createAsyncThunk(
   'delete-dish',
   async(id)=>{
     try {
-const   {data,status} =await axios.delete(`http://localhost:3000/menu/delete-menu/${id}`)
+const   {data,status} =await axios.delete(`https://food-delivery-backend-dbku.onrender.com/menu/delete-menu/${id}`)
        if (status==200) {
          toast.success(data.message)
          return id
@@ -39,8 +39,7 @@ const FetchSlice=createSlice({
                       return state=actions.payload.menu
                }).addCase(deleteFooditem.fulfilled,(state,actions)=>{
                 console.log(actions.payload)
-                  return state.filter(item => item._id!=actions.payload);
-  } )
+                  return state.filter(item => item._id!=actions.payload);} )
         }
     })
 

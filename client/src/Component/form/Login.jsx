@@ -4,8 +4,8 @@ import { useSelector,useDispatch } from 'react-redux'
 
 const Login = () => {
     const [form, setform] = useState({})
+     const log=useSelector((state)=>state.login)
     const dispatch=useDispatch()
-
 const ChangeHandle=(e)=>{
     setform((form)=>{return {...form,[e.target.name]:e.target.value } })
 }
@@ -46,7 +46,7 @@ setform({})
                         <div className="flex items-start">
                               </div>
                         </div>
-                    <button type="submit" className="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Login to your account</button>
+                    <button type="submit" className="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">{log===true?<span className="loading loading-spinner loading-xs"></span> :"Login to your account" }</button>
                     <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
                         Not registered? <span   onClick={()=>{document.getElementById('my_modal_1').close(); document.getElementById('my_modal_2').showModal()}}     className="text-red-700 hover:underline dark:text-red-500 hover:cursor-pointer ">Create account</span>
                     </div>

@@ -8,7 +8,7 @@ export const login=createAsyncThunk(
     'login-form',
     async(form)=>{
        try {
-         const {data,status}=await  axios.post('http://localhost:3000/auth/login',form)
+         const {data,status}=await  axios.post('https://food-delivery-backend-dbku.onrender.com/auth/login',form)
         switch (status) {
             case 200:
                 document.getElementById('my_modal_1').close()
@@ -16,7 +16,7 @@ export const login=createAsyncThunk(
                 return data;
                case 201:
                 document.getElementById('my_modal_1').close()
-            toast.custom(data.message)
+            toast.error(data.message)
                  break; }
        } catch (error) {
           toast.error(error.message)
@@ -35,9 +35,11 @@ const loginSlice=createSlice({
 
    extraReducers:(builder)=>{
            builder.addCase(login.fulfilled,(state,actions)=>{
-            if (!actions.payload.user) return;
+            if (!actions.payload?.user) return state={} ;
             localStorage.setItem('data',JSON.stringify(actions.payload))
           return state=actions.payload
+           }).addCase(login.pending,(state,actions)=>{
+            return state=true
            })
    }
 })
