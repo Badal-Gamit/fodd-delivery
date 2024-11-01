@@ -36,8 +36,8 @@ const statusHandle=async(e,order)=>{
           <img src="/shopping.png" alt="shopping.png" />
          </div>
          <div>
-       <div className='flex gap-1 my-1 text-gray-700 ' >{order.product.map((product)=>{
-          return <div key={product._id} >{product.name}x {product.quantity}</div>
+       <div className='flex gap-1 my-1 flex-col  text-gray-700 ' >{order.product.map((product,i)=>{
+          return <div key={product._id} >{product.name}x {product.quantity} {order.product.length==(i+1)?'':","} </div>
          })}</div>
          <p> {order.buyer.name}</p>
          <p> {order.buyer.address}</p>

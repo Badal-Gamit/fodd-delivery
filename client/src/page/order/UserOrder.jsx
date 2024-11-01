@@ -82,6 +82,12 @@ const paymentHandle=async()=>{
 const  {data,status} =await   axios.post(`https://food-delivery-backend-dbku.onrender.com/order/user-checkout/${form._id}`,{amount:total,product,nonce},{ headers:{ "Authorization":`bearer ${token}`}});
    console.log(data)
    if (status==200) {
+    if (localStorage.getItem('product')){
+      localStorage.removeItem('food')
+      localStorage.removeItem('total');
+     localStorage.removeItem('product')
+     
+     }
        navigation('/order-list')
    return   toast.success(data.message)
    }

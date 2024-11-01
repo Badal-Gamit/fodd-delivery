@@ -8,7 +8,7 @@ import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 
 const Map = () => {
     const [userLocation, setUserLocation] = useState(null);
-  const destination = [21.1104, 73.3861]; // Example destination: Paris
+  const destination = [21.1104, 73.3861];
 
 
 useEffect(() => {
@@ -50,13 +50,15 @@ useEffect(() =>{
     
    L.marker(userLocation).addTo(map).bindPopup('Your Location').openPopup();
  L.marker(destination).addTo(map).bindPopup('tomato').openPopup();
+ 
+ return () => {
+  if (map) {
+    map.removeControl(routingControl);
+  }
+}
   }
 
-  return () => {
-    if (map) {
-      map.removeControl(routingControl);
-    }
-  }
+  
 }, [userLocation]);
 
 

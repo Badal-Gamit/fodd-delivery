@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useState} from 'react'
 import { useDispatch,useSelector } from 'react-redux'
 import Layout from '../../Component/layout/Layout'
 import {Addcart}   from '../../redux/Slice/feature/CartSlice'
@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom'
 
 const Cart = () => {
   const Cart=useSelector((state)=>state.Cart )
+const [cartimg, setcartimg] = useState('cart')
   const dispatch=useDispatch()
 useEffect(() => {
 
@@ -108,7 +109,7 @@ const SubTotal=()=>{
     
      
         </div>: <div>
-          <div className="bg-[url(cart.avif)] bg-center h-64 bg-no-repeat" ></div>
+          <div className={`bg-[url(https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/2xempty_cart_yfxml0)] bg-center h-64 bg-no-repeat`}></div>
           <div className='text-center font-semibold my-5 text-3xl'>you zero item in cart</div>
         </div>  } 
     </Layout>

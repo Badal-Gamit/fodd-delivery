@@ -6,8 +6,10 @@ import Layout from '../../Component/layout/Layout'
 import { setfood, isselected } from '../../redux/Slice/feature/FoodSlice'
 import { scrollview } from '../../redux/Slice/feature/scrollSlice';
 
+
 const Home = () => {
   const [category, setcategory] = useState(['salad', 'rolls', 'desserts', 'sandwich', 'cake', 'pure-veg', 'non-veg', 'pasta', 'noddle']);
+  const [banner, setbanner] = useState('hero')
   const dishList = useSelector((state) => state.foodList)
   const food = useSelector((state) => state.food)
   const scroll = useSelector((state) => state.scroll)
@@ -98,7 +100,7 @@ const Home = () => {
   return (
     <Layout>
       <section
-        className="relative bg-[url(./hero.avif)] h-96 bg-cover bg-center bg-no-repeat   ">
+        className={`relative bg-[url(https://b.zmtcdn.com/web_assets/81f3ff974d82520780078ba1cfbd453a1583259680.png)] h-96 bg-cover bg-center bg-no-repeat` }>
         <div className='z-10 flex  items-center justify-center flex-col h-[inherit] ' >
           <h1 className="text-3xl font-extrabold text-white sm:text-5xl">
             Let us find your

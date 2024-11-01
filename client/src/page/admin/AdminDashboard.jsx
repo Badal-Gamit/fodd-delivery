@@ -18,13 +18,14 @@ useEffect(() => {
 }, [])
 useEffect(() => {
   if (orderList) {
-     const buyerdate=orderList.map((order)=>{
+     const buyerdate=orderList.map((order,i,arr)=>{
+
       let  date = new Date(order.createdAt)
        date.setDate(date.getDate())
       return {...order,createdAt:date.toLocaleDateString()}
       
       })
-    
+
 setorder(buyerdate)
   }
 }, [orderList])
@@ -38,18 +39,31 @@ useEffect(() => {
       const date = new Date(today);
       
      date.setDate(today.getDate() - i);
-     dates.push(date.toLocaleDateString()); // Format as needed
+     dates.push(date.toLocaleDateString()); 
     }
-    console.log(dates)
+  
     setdate(dates)
     return dates;
   };
   generateLast30Days()
 }, [])
+const perday=(dates)=> {
+    
+  let data=  order?.reduce((acc,order)=>{
+   if (order.createdAt==dates) {
+  return   acc +  parseInt(order.payment.transaction.amount) || 0
+   }
+    return acc
+   },0)
+ return   data
+    
+  }
+
 
  const dataplot=()=>{
-  const plot=new Map(order.map((order)=>[order.createdAt,order.payment.transaction.amount]));
-  const result=date.map((date)=>plot.has(date)?plot.get(date):0)
+  
+ 
+  const result=date.map((date)=>perday(date))
   return result;
  }
   
@@ -81,7 +95,7 @@ useEffect(() => {
   };
 
   
-  const totalRevenue = order.reduce((acc, order)=> acc + order.payment.transaction.amount, 0); 
+  const totalRevenue = order.reduce((acc, order)=> acc +  parseInt(order.payment.transaction.amount), 0); 
   const productionOrder = order.filter((order)=>order.status!='dilivered')
   const diliveredOrder = order.filter((order)=>order.status=='dilivered')
 
@@ -100,7 +114,6 @@ useEffect(() => {
         <h2 className="text-lg font-semibold text-gray-700">Total Revenue</h2>
         <p className="text-2xl font-bold text-green-600">${totalRevenue}</p>
       </div>
-     
       <div className="bg-gray-100 border border-gray-300 rounded-lg p-4 mb-6 text-center">
         <h2 className="text-lg font-semibold text-gray-700">Total Orders</h2>
         <p className="text-2xl font-bold text-blue-600">{order.length}</p>
@@ -114,7 +127,7 @@ useEffect(() => {
         <p className="text-2xl font-bold  text-teal-700 ">{diliveredOrder.length}</p>
       </div> 
       </div>
-      
+        {/* {console.log(order,'order') } */}
       </div>
     </div>
 
