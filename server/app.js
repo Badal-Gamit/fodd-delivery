@@ -1,4 +1,5 @@
 const express=require('express')
+const path=require('path')
 require('./config/MongoDbConnect')
 const authRoute=require('./routes/authRoute')
 const menuRoute=require('./routes/menuRoute')
@@ -10,10 +11,17 @@ const port= process.env.PORT || 3000
 app.use(express.urlencoded());
 app.use(express.json())
 app.use(cors())
+app.use(express.static(path.join(path.resolve(),"..","client","dist")))
+
 
 app.use('/auth',authRoute)
 app.use('/menu',menuRoute)
 app.use('/order',orderRoute)
+console.log(__dirname, path.resolve());
+app.get("*",(req,res)=>{
+ res.sendFile(path.join(path.resolve(),"..","client","dist","index.html"))
+})
+
 
 
 app.listen(port,()=>console.log(`server is run on port  ${port}`))

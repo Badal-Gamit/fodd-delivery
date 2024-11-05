@@ -13,7 +13,7 @@ useEffect(() => {
             console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
           },
           (error) => {
-            // Error callback
+          
             
             switch (error.code) {
               case error.PERMISSION_DENIED:
