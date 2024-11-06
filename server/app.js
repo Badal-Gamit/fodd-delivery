@@ -10,18 +10,17 @@ const port= process.env.PORT || 3000
 
 app.use(express.urlencoded());
 app.use(express.json())
-app.use(cors())
-app.use(express.static(path.join(path.resolve(),"..","client","dist")))
+app.use(cors({
+    origin:["https://food-dilivery-xyz.netlify.app"]
+}
+))
+
 
 
 app.use('/auth',authRoute)
 app.use('/menu',menuRoute)
 app.use('/order',orderRoute)
 console.log(__dirname, path.resolve());
-app.get("*",(req,res)=>{
- res.sendFile(path.join(path.resolve(),"..","client","dist","index.html"))
-})
-
 
 
 app.listen(port,()=>console.log(`server is run on port  ${port}`))
